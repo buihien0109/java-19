@@ -43,6 +43,7 @@ const renderTodo = (arr) => {
     todoListEl.innerHTML = html;
 };
 
+// 1. Lấy danh sách todo
 const getAllTodo = async () => {
     try {
         let rs = await todoApis.getAllTodo();
@@ -53,5 +54,20 @@ const getAllTodo = async () => {
         console.log(error);
     }
 };
+
+// 2. Tạo todo
+const btnAdd = document.querySelector("#btn-add");
+const inputEl = document.querySelector("#todo-input");
+btnAdd.addEventListener("click", createTodo)
+const createTodo = () => { }
+
+// 3. Xóa todo
+const deleteTodo = async (id) => { }
+
+// 4. Cập nhật title
+const editTodo = async (id) => { }
+
+// 5. Cập nhật status
+const toggleStatus = async (id) => { }
 
 getAllTodo();
