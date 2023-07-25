@@ -1,0 +1,56 @@
+{
+    "todos": [
+        {
+            "id": 1,
+            "title": "Đá bóng",
+            "status": true
+        },
+        {
+            "id": 2,
+            "title": "Làm bài tập",
+            "status": false
+        },
+        {
+            "id": 3,
+            "title": "Đi chơi",
+            "status": true
+        },
+        {
+            "id": 4,
+            "title": "Đi nhậu với bạn bè",
+            "status": false
+        }
+    ],
+    "posts": [
+        {
+            "id": 1,
+            "title": "json-server",
+            "author": "typicode"
+        },
+        {
+            "id": 2,
+            "title": "json-server 2",
+            "author": "typicode 2"
+        },
+        {
+            "title": "New title (update)",
+            "author": "Bùi Hiên",
+            "id": 3
+        }
+    ],
+    "comments": [
+        {
+            "id": 1,
+            "body": "some comment",
+            "postId": 1
+        },
+        {
+            "id": 2,
+            "body": "some comment 2",
+            "postId": 1
+        }
+    ],
+    "profile": {
+        "name": "typicode"
+    }
+}

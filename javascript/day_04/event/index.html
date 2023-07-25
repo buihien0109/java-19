@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .red {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <p>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea quod
+            tempore ut molestias odio assumenda quasi sapiente natus adipisci,
+            maiores, suscipit quisquam sint dolorum. Dignissimos repellendus
+            laudantium quisquam cupiditate. Aliquam.
+        </p>
+
+        <!-- Sử dụng HTML-attribute -->
+        <button onclick="sayHello()">Click me</button>
+        <button id="btn-1">Click me 1</button>
+        <button id="btn-2">Click me 2</button>
+
+        <script>
+            // Sử dụng HTML-attribute
+            function sayHello() {
+                alert("Xin chào các bạn");
+            }
+
+            let btn1 = document.querySelector("#btn-1");
+            let btn2 = document.querySelector("#btn-2");
+            let para = document.querySelector("p");
+
+            // Sử dụng DOM property
+            btn1.onclick = function () {
+                alert("Xin chào các bạn 1");
+            };
+
+            // Sử dụng addEventListener
+            btn2.addEventListener("click", function () {
+                para.classList.toggle("red");
+            });
+        </script>
+    </body>
+</html>

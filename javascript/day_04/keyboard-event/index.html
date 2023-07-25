@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            // Lắng nghe sự kiện keydown
+            document.addEventListener("keydown", function (e) {
+                console.log(e);
+                if (e.keyCode == 13) {
+                    console.log("Bạn thật đẹp trai!");
+                } else {
+                    console.log("Bấm phím Enter đi, có điều bất ngờ đó!");
+                }
+            });
+
+            // // Lắng nghe sự kiện keyup
+            // document.addEventListener("keyup", function () {
+            //     console.log("keyup");
+            // });
+
+            // // Lắng nghe sự kiện keypress
+            // document.addEventListener("keypress", function () {
+            //     console.log("keypress");
+            // });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            // Mô tả về hoạt đồng hằng ngày
+            // 1. Làm bài tập (3s)
+            // 2. Đá bóng (4s)
+            // 3. Nấu cơm (5s)
+
+            function doTask1(name, callback) {
+                console.log("Bắt đầu công việc");
+                console.log(`Thực hiện công việc ${name}`);
+                setTimeout(function () {
+                    callback();
+                }, 3000);
+            }
+
+            function doTask2(name, callback) {
+                console.log(`Thực hiện công việc ${name}`);
+                setTimeout(function () {
+                    callback();
+                }, 4000);
+            }
+
+            function doTask3(name, callback) {
+                console.log(`Thực hiện công việc ${name}`);
+                setTimeout(function () {
+                    callback();
+                }, 5000);
+            }
+
+            function finish() {
+                console.log("Kết thúc công việc");
+            }
+
+            // Thực hiện cv đồng thời với nhau
+            // doTask1("Làm bài tập", finish)
+            // doTask2("Đá bóng", finish)
+            // doTask3("Nấu cơm", finish)
+
+            // Thực hiện cv : Mà cv sau cần kết quả của cv trước để thực hiện
+            doTask1("Nhặt rau", () => {
+                doTask2("Rửa rau", () => {
+                    doTask3("Luộc rau", finish)
+                })
+            })
+            console.log("Đi chơi")
+        </script>
+    </body>
+</html>
