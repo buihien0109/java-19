@@ -1,5 +1,5 @@
 let todos = [];
-const API_URL = "http://localhost:3000/todos";
+const API_URL = "https://lovely-dirndl-pike.cyclic.app/todos"; // deploy xong thì thay URL vào đây
 const todoApis = {
     getAllTodo() {
         return axios.get(API_URL);
