@@ -10,6 +10,7 @@ import java.util.Random;
 //@RestController = @Controller + @ResponseBody
 //@Controller
 @RestController
+@RequestMapping("/posts")
 public class WebController {
     private List<Post> postList;
 
@@ -23,14 +24,16 @@ public class WebController {
     }
 
     // 1. Lấy ds tất cả post
-    @RequestMapping(method = RequestMethod.GET, value = "/posts")
+//    @RequestMapping(method = RequestMethod.GET, value = "/posts")
+    @GetMapping("")
     public List<Post> getAllPost() {
         return this.postList;
     }
 
     // 2. Lấy post theo id
     // /posts/1 , /posts/2
-    @RequestMapping(method = RequestMethod.GET, value = "/posts/{id}")
+//    @RequestMapping(method = RequestMethod.GET, value = "/posts/{id}")
+    @GetMapping("{id}")
     public Post getPostById(@PathVariable Integer id) {
         return this.postList.stream()
                 .filter(p -> p.getId().equals(id))
@@ -38,7 +41,8 @@ public class WebController {
     }
 
     // 3. Tạo mới
-    @RequestMapping(method = RequestMethod.POST, value = "/posts")
+//    @RequestMapping(method = RequestMethod.POST, value = "/posts")
+    @PostMapping("")
     public Post createPost(@RequestBody Post request) {
         System.out.println(request);
 
@@ -53,13 +57,14 @@ public class WebController {
     }
 
     // 4. Cập nhật
-    @RequestMapping(method = RequestMethod.PUT, value = "/posts/{id}")
+//    @RequestMapping(method = RequestMethod.PUT, value = "/posts/{id}")
+    @PutMapping("{id}")
     public Post updatePost(@PathVariable Integer id, @RequestBody Post request) {
         Post post = this.postList.stream()
                 .filter(p -> p.getId().equals(id))
                 .findFirst().orElse(null);
 
-        if(post != null) {
+        if (post != null) {
             post.setTitle(request.getTitle());
             post.setAuthor(request.getAuthor());
             return post;
@@ -68,8 +73,18 @@ public class WebController {
     }
 
     // 5. Xóa
-    @RequestMapping(method = RequestMethod.DELETE, value = "/posts/{id}")
+//    @RequestMapping(method = RequestMethod.DELETE, value = "/posts/{id}")
+    @DeleteMapping("{id}")
     public void deletePost(@PathVariable Integer id) {
         this.postList.removeIf(post -> post.getId().equals(id));
+    }
+
+    // 6. Tìm kiếm
+    // /posts/search?title=bac
+    @GetMapping("search")
+    public List<Post> searchPost(@RequestParam String title) {
+        return this.postList.stream()
+                .filter(post -> post.getTitle().toLowerCase().contains(title.toLowerCase()))
+                .toList();
     }
 }
