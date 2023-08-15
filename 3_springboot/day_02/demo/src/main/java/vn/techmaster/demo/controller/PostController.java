@@ -17,6 +17,7 @@ import vn.techmaster.demo.service.PostService;
 
 //@RestController = @Controller + @ResponseBody
 //@Controller
+@CrossOrigin
 @RestController
 @RequestMapping("/posts")
 public class PostController {
