@@ -3,6 +3,8 @@ package vn.techmaster.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.techmaster.demo.dao.PostDAO;
+import vn.techmaster.demo.exception.BadRequestException;
+import vn.techmaster.demo.exception.ResouceNotFoundException;
 import vn.techmaster.demo.model.Post;
 
 import java.util.List;
@@ -23,7 +25,7 @@ public class PostService {
                 .filter(p -> p.getId().equals(id))
                 .findFirst()
                 .orElseThrow(() -> {
-                    throw new RuntimeException("Not found post");
+                    throw new ResouceNotFoundException("Not found post");
                 });
     }
 
@@ -51,6 +53,9 @@ public class PostService {
     }
 
     public List<Post> searchPost(String title) {
+        if(title.trim().length() == 0) {
+            throw new BadRequestException("Title không được để trống");
+        }
         return postDAO.findByTitleContainsIgnoreCase(title);
     }
 }
