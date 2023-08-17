@@ -22,7 +22,7 @@ import vn.techmaster.demo.service.PostService;
 @RequestMapping("/posts")
 public class PostController {
     @Autowired
-    private PostService postService;
+    private PostService postService; // Field-based Injection
 
     // 1. Lấy ds tất cả post
 //    @RequestMapping(method = RequestMethod.GET, value = "/posts")
