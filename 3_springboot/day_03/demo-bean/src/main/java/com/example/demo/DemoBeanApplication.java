@@ -2,6 +2,7 @@ package com.example.demo;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,6 +16,10 @@ public class DemoBeanApplication implements CommandLineRunner {
 
     @Autowired
     private Random rd;
+
+    @Autowired
+    @Qualifier("bus")
+    private Vehicle vehicle;
 
 //    private User user;
 //    public DemoBeanApplication(User user) {
@@ -35,6 +40,8 @@ public class DemoBeanApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         user.work();
         System.out.println("Random Number = " + rd.nextInt(1000));
+
+        vehicle.move();
     }
 }
 
