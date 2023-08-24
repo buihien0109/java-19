@@ -48,7 +48,7 @@
         <h2 class="fs-5 mb-4">Chủ đề</h2>
         <div class="topic-list">
           <div th:each="topic : ${topicList}" class="topic-item input-group d-flex align-items-center mb-1">
-            <input type="radio" th:value="${topic}" th:id="${topic}" th:name="${topic}" />
+            <input type="radio" th:value="${topic}" th:id="${topic}" name="topic" />
             <label th:for="${topic}" class="ms-2 fs-5" th:text="${topic}">Lập trình Backend</label>
           </div>
         </div>
