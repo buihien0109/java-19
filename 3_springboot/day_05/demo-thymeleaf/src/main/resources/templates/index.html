@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<h1>Xin chào <th:block th:text="${name}"></th:block></h1>
+
+<ul>
+    <li>Id : <th:block th:text="${user.id}"></th:block></li>
+    <li>Name : <th:block th:text="${user.name}"></th:block></li>
+    <li>Email : <th:block th:text="${user.email}"></th:block></li>
+</ul>
+
+<ul th:object="${user}">
+    <li>Id : <th:block th:text="*{id}"></th:block></li>
+    <li>Name : <th:block th:text="*{name}"></th:block></li>
+    <li>Email : <th:block th:text="*{email}"></th:block></li>
+</ul>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="user : ${userList}">
+            <td th:text="${user.id}">1</td>
+            <td th:text="${user.name}">Hiên</td>
+            <td th:text="${user.email}">hien@gmail.com</td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>
