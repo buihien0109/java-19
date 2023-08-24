@@ -14,6 +14,10 @@
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.6.0/pagination.min.css"
+        integrity="sha512-K1k7jSn9RDKEcn/ugqVVvWYu0bcS3q1w6m/5pQSnrj0bCfIqF6Wk49lkmckSb4wglvTP9V17LtS0q0XxYccXbg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
     <link rel="stylesheet" href="./css/style.css">
 </head>
@@ -24,7 +28,8 @@
             <div class="d-flex justify-content-start align-items-center">
                 <div class="logo">
                     <a href="./course-list.html">
-                        <img src="https://techmaster.vn/resources/image/logo-techmaster/white/white_200x74.png" alt="logo">
+                        <img src="https://techmaster.vn/resources/image/logo-techmaster/white/white_200x74.png"
+                            alt="logo">
                     </a>
                 </div>
                 <div class="menu">
@@ -39,32 +44,47 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
+                    <button class="btn-unfilter btn btn-danger mb-4 px-5 rounded d-none">Bỏ lọc</button>
                     <h2 class="fs-5 mb-4">Chủ đề</h2>
-                    <div class="topic-item input-group d-flex align-items-center mb-1">
-                        <input type="radio" value="Backend" id="backend" name="topic">
-                        <label for="backend" class="ms-2 fs-5">Lập trình Backend</label>
-                    </div>
-                    <div class="topic-item input-group d-flex align-items-center mb-1">
-                        <input type="radio" value="Frontend" id="frontend" name="topic">
-                        <label for="frontend" class="ms-2 fs-5">Lập trình Frontend</label>
-                    </div>
-                    <div class="topic-item input-group d-flex align-items-center mb-1">
-                        <input type="radio" value="Di động" id="mobile" name="topic">
-                        <label for="mobile" class="ms-2 fs-5">Lập trình di động</label>
-                    </div>
-                    <div class="topic-item input-group d-flex align-items-center mb-1">
-                        <input type="radio" value="Database" id="database" name="topic">
-                        <label for="database" class="ms-2 fs-5">Cơ sở dữ liệu</label>
+                    <div class="topic-list">
+                        <div class="topic-item input-group d-flex align-items-center mb-1">
+                            <input type="radio" value="Backend" id="backend" name="topic">
+                            <label for="backend" class="ms-2 fs-5">Lập trình Backend</label>
+                        </div>
+                        <div class="topic-item input-group d-flex align-items-center mb-1">
+                            <input type="radio" value="Frontend" id="frontend" name="topic">
+                            <label for="frontend" class="ms-2 fs-5">Lập trình Frontend</label>
+                        </div>
+                        <div class="topic-item input-group d-flex align-items-center mb-1">
+                            <input type="radio" value="Di động" id="mobile" name="topic">
+                            <label for="mobile" class="ms-2 fs-5">Lập trình di động</label>
+                        </div>
+                        <div class="topic-item input-group d-flex align-items-center mb-1">
+                            <input type="radio" value="Database" id="database" name="topic">
+                            <label for="database" class="ms-2 fs-5">Cơ sở dữ liệu</label>
+                        </div>
                     </div>
                 </div>
 
                 <div class="col-md-9">
-                    <div class="row">
+                    <div class="row justify-content-between">
                         <div class="col-md-4">
                             <div class="seach-form d-flex align-items-center rounded shadow-sm mb-4 pe-3">
-                                <input type="text" placeholder="Tìm kiếm khóa học" class="form-control border-0 seach-form-input">
-                                <span class="text-black-50 seach-form-button"><i class="fa-solid fa-magnifying-glass"></i></span>
+                                <input placeholder="Tìm kiếm khóa học" class="form-control border-0 seach-form-input"
+                                    type="search">
+                                <span class="text-black-50 seach-form-button"><i
+                                        class="fa-solid fa-magnifying-glass"></i></span>
                             </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <select class="form-select item-per-page" aria-label="Default select example">
+                                <option hidden>Số lượng hiển thị</option>
+                                <option value="2">2 items</option>
+                                <option value="3">3 items</option>
+                                <option value="4">4 items</option>
+                                <option value="all">All items</option>
+                              </select>
                         </div>
                     </div>
                     <div class="course-list row">
@@ -153,14 +173,27 @@
                             </a>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="d-flex justify-content-center mt-3" id="pagination">
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.6.0/pagination.min.js"
+        integrity="sha512-GzbaI5EsNzdEUq6/2XLYpr1y9CUZRIVsUeWTAFgULtQa5jZ3Nug8i0nZKM6jp9NffBCZhymPPQFcF0DK+JkRpw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./js/course.js"></script>
 </body>
 
 </html>

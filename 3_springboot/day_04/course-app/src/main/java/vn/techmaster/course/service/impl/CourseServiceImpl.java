@@ -1,4 +1,4 @@
-package vn.techmaster.course.service;
+package vn.techmaster.course.service.impl;
 
 import org.springframework.stereotype.Service;
 import vn.techmaster.course.dao.CourseDAO;
@@ -7,6 +7,7 @@ import vn.techmaster.course.dto.CourseDto;
 import vn.techmaster.course.exception.ResouceNotFoundException;
 import vn.techmaster.course.model.Course;
 import vn.techmaster.course.model.User;
+import vn.techmaster.course.service.CourseService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,12 +24,13 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> getAllCourse(String type, String name, String topic) {
+    public List<CourseDto> getAllCourse(String type, String name, String topic) {
         List<Course> courseList = courseDAO.findAll();
         return courseList.stream()
                 .filter(course -> (type == null || course.getType().equals(type))
                         && (name == null || course.getName().toLowerCase().contains(name.toLowerCase()))
                         && (topic == null || course.getTopics().contains(topic)))
+                .map(this::mapToDto)
                 .collect(Collectors.toList());
     }
 

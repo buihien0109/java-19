@@ -6,7 +6,7 @@ import vn.techmaster.course.model.Course;
 import java.util.List;
 
 public interface CourseService {
-    List<Course> getAllCourse(String type, String name, String topic);
+    List<CourseDto> getAllCourse(String type, String name, String topic);
 
     CourseDto getCourseById(Integer id);
 }

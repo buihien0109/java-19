@@ -2,7 +2,10 @@ package vn.techmaster.course.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.techmaster.course.dto.CourseDto;
 import vn.techmaster.course.service.CourseService;
+
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -15,15 +18,17 @@ public class CourseController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllCourse(
+    public ResponseEntity<List<CourseDto>> getAllCourse(
             @RequestParam(required = false) String type,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String topic) {
-        return ResponseEntity.ok(courseService.getAllCourse(type, name, topic));
+        List<CourseDto> courseDtoList = courseService.getAllCourse(type, name, topic);
+        return ResponseEntity.ok(courseDtoList);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<?> getCourseById(@PathVariable Integer id) {
-        return ResponseEntity.ok(courseService.getCourseById(id));
+    public ResponseEntity<CourseDto> getCourseById(@PathVariable Integer id) {
+        CourseDto courseDto = courseService.getCourseById(id);
+        return ResponseEntity.ok(courseDto);
     }
 }
