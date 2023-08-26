@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: main-layout(~{:: title}, ~{:: #css}, ~{:: #content}, ~{})}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Admin Page</title>
+
+    <th:block id="css">
+        <link rel="stylesheet" href="/css/admin.css">
+    </th:block>
 </head>
 <body>
-<h1>Admin Page</h1>
+<th:block id="content">
+    <h1>Admin Page</h1>
+
+    <th:block th:replace="~{/fragments/fragment :: card(${user1})}"></th:block>
+
+    <hr>
+
+    <th:block th:replace="~{/fragments/fragment :: card(${user2})}"></th:block>
+
+    <hr>
+
+    <th:block th:each="user : ${userList}">
+        <th:block th:replace="~{/fragments/fragment :: card(${user})}"></th:block>
+    </th:block>
+</th:block>
 </body>
 </html>

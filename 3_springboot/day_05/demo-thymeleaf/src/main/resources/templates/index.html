@@ -1,40 +1,55 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: main-layout(~{:: title}, ~{:: #css}, ~{:: #content}, ~{})}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Home page</title>
+
+    <th:block id="css">
+        <link rel="stylesheet" href="/css/index.css">
+    </th:block>
 </head>
 <body>
-<h1>Xin chào <th:block th:text="${name}"></th:block></h1>
+<th:block id="content">
+    <h1>Xin chào <th:block th:text="${name}"></th:block></h1>
 
-<ul>
-    <li>Id : <th:block th:text="${user.id}"></th:block></li>
-    <li>Name : <th:block th:text="${user.name}"></th:block></li>
-    <li>Email : <th:block th:text="${user.email}"></th:block></li>
-</ul>
+    <ul>
+        <li>Id : <th:block th:text="${user.id}"></th:block></li>
+        <li>Name : <th:block th:text="${user.name}"></th:block></li>
+        <li>Email : <th:block th:text="${user.email}"></th:block></li>
+    </ul>
 
-<ul th:object="${user}">
-    <li>Id : <th:block th:text="*{id}"></th:block></li>
-    <li>Name : <th:block th:text="*{name}"></th:block></li>
-    <li>Email : <th:block th:text="*{email}"></th:block></li>
-</ul>
+    <ul th:object="${user}">
+        <li>Id : <th:block th:text="*{id}"></th:block></li>
+        <li>Name : <th:block th:text="*{name}"></th:block></li>
+        <li>Email : <th:block th:text="*{email}"></th:block></li>
+    </ul>
 
-<table>
-    <thead>
+    <table>
+        <thead>
         <tr>
             <th>ID</th>
             <th>Name</th>
             <th>Email</th>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         <tr th:each="user : ${userList}">
             <td th:text="${user.id}">1</td>
             <td th:text="${user.name}">Hiên</td>
             <td th:text="${user.email}">hien@gmail.com</td>
         </tr>
-    </tbody>
-</table>
+        </tbody>
+    </table>
+
+    <th:block th:if="${#lists.isEmpty(userList)}">
+        <p>Danh sách trống</p>
+    </th:block>
+
+    <th:block th:if="${not #lists.isEmpty(userList)}">
+        <p>Danh sách user</p>
+    </th:block>
+
+    <p th:text="${#temporals.format(localDateTime, 'dd/MM/yyyy - HH:mm:ss')}"></p>
+</th:block>
 </body>
 </html>

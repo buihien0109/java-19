@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="main-layout(title, css, content, js)">
+<head>
+    <meta charset="UTF-8">
+    <title th:replace="${title}">Title</title>
+
+<!--  CSS-->
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <th:block th:replace="${css} ?: ~{}"></th:block>
+</head>
+<body>
+<!--HEADER-->
+<th:block th:replace="~{/fragments/fragment :: menu}"></th:block>
+
+<!--CONTENT-->
+<th:block th:replace="${content} ?: ~{}"></th:block>
+
+<!--FOOTER-->
+<div>
+  <h2>Footer</h2>
+</div>
+
+<!--JS-->
+<th:block th:replace="${js} ?: ~{}"></th:block>
+</body>
+</html>

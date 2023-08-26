@@ -27,6 +27,24 @@ public class CourseViewController {
         return "course-list";
     }
 
+    @GetMapping("/khoa-hoc/online")
+    public String getCourseOnlinePage(Model model) {
+        List<CourseDto> courseDtoList = courseService.getAllCourse("online", null, null);
+        model.addAttribute("courseList", courseDtoList);
+        model.addAttribute("topicList", TopicDB.topicList);
+
+        return "course-online-list";
+    }
+
+    @GetMapping("/khoa-hoc/onlab")
+    public String getCourseOnlabPage(Model model) {
+        List<CourseDto> courseDtoList = courseService.getAllCourse("onlab", null, null);
+        model.addAttribute("courseList", courseDtoList);
+        model.addAttribute("topicList", TopicDB.topicList);
+
+        return "course-onlab-list";
+    }
+
     @GetMapping("/khoa-hoc/{id}")
     public String getCourseDetailPage(Model model, @PathVariable Integer id) {
         CourseDto courseDto = courseService.getCourseById(id);

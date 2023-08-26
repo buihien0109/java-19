@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul th:fragment="menu">
+  <li><a href="/">Trang chủ</a></li>
+  <li><a href="/admin">Trang admin</a></li>
+  <li><a href="/admin">Admin page</a></li>
+</ul>
+
+<div th:fragment="card(user)">
+  <h3 th:text="${user.name}">Tác giả</h3>
+  <p th:text="${user.email}">Nội dung câu quote</p>
+</div>
+</body>
+</html>

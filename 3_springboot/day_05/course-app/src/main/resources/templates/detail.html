@@ -19,22 +19,7 @@
 </head>
 
 <body>
-<div class="header d-flex align-items-center">
-  <div class="container-fluid">
-    <div class="d-flex justify-content-start align-items-center">
-      <div class="logo">
-        <a href="/khoa-hoc">
-          <img src="https://techmaster.vn/resources/image/logo-techmaster/white/white_200x74.png"
-               alt="logo">
-        </a>
-      </div>
-      <div class="menu">
-        <a class="text-white text-uppercase ms-5" href="/khoa-hoc/onlab">Phòng lab</a>
-        <a class="text-white text-uppercase ms-3" href="/khoa-hoc/online">Trực tuyến</a>
-      </div>
-    </div>
-  </div>
-</div>
+<th:block th:replace="~{/fragments/fragment :: header}"></th:block>
 
 <div class="course-container mt-5">
   <div class="container">
@@ -43,7 +28,7 @@
         <div class="mb-4">
           <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="./course-list.html">Khóa học</a></li>
+              <li class="breadcrumb-item"><a href="/khoa-hoc">Khóa học</a></li>
               <li class="breadcrumb-item active" aria-current="page" th:text="${course.name}">Lập trình di động IOS Swift
                 online</li>
             </ol>
