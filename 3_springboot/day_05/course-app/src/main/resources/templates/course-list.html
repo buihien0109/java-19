@@ -27,14 +27,14 @@
   <div class="container-fluid">
     <div class="d-flex justify-content-start align-items-center">
       <div class="logo">
-        <a href="./course-list.html">
+        <a href="/khoa-hoc">
           <img src="https://techmaster.vn/resources/image/logo-techmaster/white/white_200x74.png"
                alt="logo">
         </a>
       </div>
       <div class="menu">
-        <a class="text-white text-uppercase ms-5" href="./course-onlab-list.html">Phòng lab</a>
-        <a class="text-white text-uppercase ms-3" href="./course-online-list.html">Trực tuyến</a>
+        <a class="text-white text-uppercase ms-5" href="/khoa-hoc/onlab">Phòng lab</a>
+        <a class="text-white text-uppercase ms-3" href="/khoa-hoc/online">Trực tuyến</a>
       </div>
     </div>
   </div>
@@ -77,11 +77,10 @@
         </div>
         <div class="course-list row">
           <div class="col-md-4" th:each="course : ${courseList}">
-            <a href="./detail.html">
+            <a th:href="@{/khoa-hoc/{id} (id = ${course.id})}">
               <div class="course-item shadow-sm rounded mb-4">
                 <div class="course-item-image">
-                  <img th:src="${course.thumbnail}"
-                       th:alt="${course.name}">
+                  <img th:src="${course.thumbnail}" th:alt="${course.name}" />
                 </div>
                 <div class="course-item-info p-3">
                   <h2 class="fs-5 mb-3 text-dark" th:text="${course.name}">Spring Boot - Web Back End</h2>
@@ -111,7 +110,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.6.0/pagination.min.js"
         integrity="sha512-GzbaI5EsNzdEUq6/2XLYpr1y9CUZRIVsUeWTAFgULtQa5jZ3Nug8i0nZKM6jp9NffBCZhymPPQFcF0DK+JkRpw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="./js/course2.js"></script>
+<script th:src="@{/js/course.js}"></script>
 </body>
 
 </html>
