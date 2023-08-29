@@ -9,4 +9,8 @@ public interface CourseDAO {
     List<Course> findAll();
 
     Optional<Course> findById(Integer id);
+
+    void deleteById(Integer id);
+
+    Course save(Course course);
 }

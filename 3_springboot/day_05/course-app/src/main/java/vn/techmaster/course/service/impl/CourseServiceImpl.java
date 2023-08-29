@@ -2,57 +2,66 @@ package vn.techmaster.course.service.impl;
 
 import org.springframework.stereotype.Service;
 import vn.techmaster.course.dao.CourseDAO;
-import vn.techmaster.course.dao.UserDAO;
-import vn.techmaster.course.dto.CourseDto;
 import vn.techmaster.course.exception.ResouceNotFoundException;
 import vn.techmaster.course.model.Course;
-import vn.techmaster.course.model.User;
+import vn.techmaster.course.request.UpsertCourseRequest;
 import vn.techmaster.course.service.CourseService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CourseServiceImpl implements CourseService {
-
     private final CourseDAO courseDAO;
-    private final UserDAO userDAO;
 
-    public CourseServiceImpl(CourseDAO courseDAO, UserDAO userDAO) {
+    public CourseServiceImpl(CourseDAO courseDAO) {
         this.courseDAO = courseDAO;
-        this.userDAO = userDAO;
     }
 
     @Override
-    public List<CourseDto> getAllCourse(String type, String name, String topic) {
-        List<Course> courseList = courseDAO.findAll();
-        return courseList.stream()
-                .filter(course -> (type == null || course.getType().equals(type))
-                        && (name == null || course.getName().toLowerCase().contains(name.toLowerCase()))
-                        && (topic == null || course.getTopics().contains(topic)))
-                .map(this::mapToDto)
-                .collect(Collectors.toList());
+    public List<Course> getAllCourse() {
+        return courseDAO.findAll();
     }
 
     @Override
-    public CourseDto getCourseById(Integer id) {
+    public Course getCourseById(Integer id) {
+        return courseDAO.findById(id)
+                .orElseThrow(() -> new ResouceNotFoundException("Not found course"));
+    }
+
+    @Override
+    public Course createCourse(UpsertCourseRequest request) {
+        Course course = Course.builder()
+                .name(request.getName())
+                .description(request.getDescription())
+                .type(request.getType())
+                .topics(request.getTopics())
+                .thumbnail(request.getThumbnail())
+                .userId(request.getUserId())
+                .build();
+
+        return courseDAO.save(course);
+    }
+
+    @Override
+    public Course updateCourse(Integer id, UpsertCourseRequest request) {
         Course course = courseDAO.findById(id)
                 .orElseThrow(() -> new ResouceNotFoundException("Not found course"));
 
-        return mapToDto(course);
+        course.setName(request.getName());
+        course.setDescription(request.getDescription());
+        course.setType(request.getType());
+        course.setTopics(request.getTopics());
+        course.setThumbnail(request.getThumbnail());
+        course.setUserId(request.getUserId());
+
+        return course;
     }
 
-    private CourseDto mapToDto(Course course) {
-        User user = userDAO.findById(course.getUserId())
-                .orElseThrow(() -> new ResouceNotFoundException("Not found user"));
-        return CourseDto.builder()
-                .id(course.getId())
-                .name(course.getName())
-                .description(course.getDescription())
-                .type(course.getType())
-                .topics(course.getTopics())
-                .thumbnail(course.getThumbnail())
-                .user(user)
-                .build();
+    @Override
+    public void deleteCourse(Integer id) {
+        Course course = courseDAO.findById(id)
+                .orElseThrow(() -> new ResouceNotFoundException("Not found course"));
+
+        courseDAO.deleteById(id);
     }
 }
