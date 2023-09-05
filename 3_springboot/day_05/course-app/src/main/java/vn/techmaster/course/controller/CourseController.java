@@ -6,11 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import vn.techmaster.course.db.TopicDB;
 import vn.techmaster.course.model.Course;
 import vn.techmaster.course.request.UpsertCourseRequest;
 import vn.techmaster.course.service.CourseService;
+import vn.techmaster.course.service.UserService;
 
 import java.util.List;
 
@@ -18,9 +18,11 @@ import java.util.List;
 @Controller
 public class CourseController {
     private final CourseService courseService;
+    private final UserService userService;
 
-    public CourseController(CourseService courseService) {
+    public CourseController(CourseService courseService, UserService userService) {
         this.courseService = courseService;
+        this.userService = userService;
     }
 
     // API Trả về View
@@ -42,6 +44,8 @@ public class CourseController {
         Course course = courseService.getCourseById(id);
         model.addAttribute("course", course);
         model.addAttribute("topicList", TopicDB.topicList);
+        model.addAttribute("userList", userService.getAllUser());
+
         return "admin/course/detail";
     }
 
