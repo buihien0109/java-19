@@ -42,7 +42,7 @@
                 <tr th:each="course, state : ${courseList}">
                     <td th:text="${state.index + 1}">1</td>
                     <td>
-                        <a th:href="@{/admin/course/{id} (id = ${course.id})}" th:text="${course.name}">SpringBoot - Web Back End</a>
+                        <a th:href="@{/admin/courses/{id} (id = ${course.id})}" th:text="${course.name}">SpringBoot - Web Back End</a>
                     </td>
                     <td class="text-info">
                         <span class="badge" th:text="${course.type}" th:classappend="${course.type == 'online'} ? 'bg-primary' : 'bg-success'">Onlab</span>
