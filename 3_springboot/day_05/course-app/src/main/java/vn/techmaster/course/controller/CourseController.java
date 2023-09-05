@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import vn.techmaster.course.db.TopicDB;
 import vn.techmaster.course.model.Course;
 import vn.techmaster.course.request.UpsertCourseRequest;

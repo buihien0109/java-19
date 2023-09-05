@@ -96,40 +96,29 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
+        const courseThumbnailPreviewEl = document.getElementById("course-logo-preview");
+        const courseThumbnailInputEl = document.getElementById("course-logo-input");
 
-        // Truy cập vào các thành phần
-        const courseName = document.getElementById("course-name");
-        const courseDescription = document.getElementById("course-description");
-        const courseType = document.getElementById("course-type");
-        const courseTopic = $("#course-topic");
-        const courseSupporter = document.getElementById("course-supporter");
-        const courseThumbnailPreview = document.getElementById("course-logo-preview");
+        courseThumbnailInputEl.addEventListener("change", async (e) => {
+           // b1 : lấy ra file cần upload
+            const file = e.target.files[0];
+            console.log(file);
 
-        // Kích hoạt select2
-        courseTopic.select2({
-            placeholder: "- Chọn chủ đề",
+           // b2 : tạo đối tượng formdata
+            const formData = new FormData();
+            formData.append("file", file);
+
+           // b3 : gọi api
+            try {
+                const res = await axios.post("/api/v1/files", formData);
+                if(res.status === 200) {
+                    courseThumbnailPreviewEl.src = res.data;
+                    toastr.success("Upload ảnh thành công");
+                }
+            } catch (e) {
+                console.log(e)
+            }
         });
-
-        let course = {
-            id: 1,
-            name: "Khóa học Spring Boot",
-            description: "Spring Boot là một module của Spring Framework giúp giảm tải các cấu hình cho phép xây dựng nhanh chóng một ứng dụng độc lập. Spring Boot cung cấp sẵn các Embedded HTTP servers (Tomcat, Jetty, …), các plugins để phát triển và test một cách dễ dàng.",
-            type: "onlab",
-            topics: ["1", "2", "3"],
-            thumnail: "https://media.techmaster.vn/api/static/36/bu7v9ks51co41h2qcttg",
-            supporterId: "1"
-        }
-
-        const initCourse = (course) => {
-            courseName.value = course.name;
-            courseDescription.innerText = course.description;
-            courseType.value = course.type;
-            courseTopic.val(course.topics).trigger("change");
-            courseSupporter.value = course.supporterId;
-            courseThumbnailPreview.src = course.thumnail;
-        }
-
-        initCourse(course);
     </script>
 </th:block>
 </body>
