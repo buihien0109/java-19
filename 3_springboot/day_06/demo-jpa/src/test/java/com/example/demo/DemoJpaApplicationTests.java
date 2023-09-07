@@ -90,9 +90,9 @@ class DemoJpaApplicationTests {
 	void save_all_employee() {
 		Faker faker = new Faker();
 		Random rd = new Random();
-		List<String> departments = List.of("A", "B", "C", "D");
-		Date from = new Date(1204095742779L);
-		Date to = new Date(1604095742779L);
+		List<String> departments = List.of("A", "B", "C", "D"); // Danh sách phòng ban
+		Date from = new Date(1204095742779L); // Ngày bắt đầu
+		Date to = new Date(1604095742779L); // Ngày kết thúc
 		for (int i = 0; i < 30; i++) {
 			Employee employee = new Employee(
 					faker.name().fullName(),
