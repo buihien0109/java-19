@@ -1,7 +1,11 @@
 package com.example.demo;
 
+import com.example.demo.entity.Author;
+import com.example.demo.entity.Book;
 import com.example.demo.entity.Card;
 import com.example.demo.entity.User;
+import com.example.demo.repository.AuthorRepository;
+import com.example.demo.repository.BookRepository;
 import com.example.demo.repository.CardRepository;
 import com.example.demo.repository.UserRepository;
 import com.github.javafaker.Faker;
@@ -15,6 +19,10 @@ class DemoRelationshipApplicationTests {
     private UserRepository userRepository;
     @Autowired
     private CardRepository cardRepository;
+    @Autowired
+    private AuthorRepository authorRepository;
+    @Autowired
+    private BookRepository bookRepository;
 
     @Test
     void save_user_card() {
@@ -52,5 +60,27 @@ class DemoRelationshipApplicationTests {
     @Test
     void delete_user() {
         userRepository.deleteById(2);
+    }
+
+    @Test
+    void save_author_book() {
+        Faker faker = new Faker();
+        for (int i = 0; i < 3 ; i++) {
+            Author author = new Author();
+            author.setName(faker.book().author());
+            authorRepository.save(author);
+
+            for (int j = 0; j < 3; j++) {
+                Book book = new Book();
+                book.setTitle(faker.book().title());
+                book.setAuthor(author);
+                bookRepository.save(book);
+            }
+        }
+    }
+
+    @Test
+    void get_book_by_id() {
+        Book book = bookRepository.findById(1).get();
     }
 }
