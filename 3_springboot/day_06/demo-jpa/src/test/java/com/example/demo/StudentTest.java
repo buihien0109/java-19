@@ -38,11 +38,11 @@ public class StudentTest {
     @Test
     void pagingTest() {
         Pageable pageable = PageRequest.of(1, 5);
-        Page<Student> page =  studentRepository.findAll(pageable);
+        Page<Student> page = studentRepository.findAll(pageable);
         page.getContent().forEach(System.out::println);
 
         System.out.println();
-        Page<Student> page1 =  studentRepository.getAllStudent(pageable);
+        Page<Student> page1 = studentRepository.getAllStudent(pageable);
         page1.getContent().forEach(System.out::println);
     }
 
