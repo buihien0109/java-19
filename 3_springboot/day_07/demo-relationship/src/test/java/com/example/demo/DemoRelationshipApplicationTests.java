@@ -1,17 +1,13 @@
 package com.example.demo;
 
-import com.example.demo.entity.Author;
-import com.example.demo.entity.Book;
-import com.example.demo.entity.Card;
-import com.example.demo.entity.User;
-import com.example.demo.repository.AuthorRepository;
-import com.example.demo.repository.BookRepository;
-import com.example.demo.repository.CardRepository;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.entity.*;
+import com.example.demo.repository.*;
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Random;
 
 @SpringBootTest
 class DemoRelationshipApplicationTests {
@@ -23,11 +19,15 @@ class DemoRelationshipApplicationTests {
     private AuthorRepository authorRepository;
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
+    @Autowired
+    private PostRepository postRepository;
 
     @Test
     void save_user_card() {
         Faker faker = new Faker();
-        for (int i = 0; i < 10 ; i++) {
+        for (int i = 0; i < 10; i++) {
             Card card = new Card();
             card.setCode(faker.code().isbn10());
             cardRepository.save(card);
@@ -42,7 +42,7 @@ class DemoRelationshipApplicationTests {
     @Test
     void save_user_card_2() {
         Faker faker = new Faker();
-        for (int i = 0; i < 5 ; i++) {
+        for (int i = 0; i < 5; i++) {
             User user = new User();
             user.setName(faker.name().fullName());
             user.setCard(new Card(null, faker.code().isbn10()));
@@ -65,7 +65,7 @@ class DemoRelationshipApplicationTests {
     @Test
     void save_author_book() {
         Faker faker = new Faker();
-        for (int i = 0; i < 3 ; i++) {
+        for (int i = 0; i < 3; i++) {
             Author author = new Author();
             author.setName(faker.book().author());
             authorRepository.save(author);
@@ -82,5 +82,24 @@ class DemoRelationshipApplicationTests {
     @Test
     void get_book_by_id() {
         Book book = bookRepository.findById(1).get();
+    }
+
+    @Test
+    void save_post_category() {
+        Faker faker = new Faker();
+        Random random = new Random();
+        for (int i = 0; i < 5; i++) {
+            Category category = new Category();
+            category.setName(faker.book().genre());
+            categoryRepository.save(category);
+        }
+
+        for (int i = 0; i < 5; i++) {
+            Post post = new Post();
+            post.setTitle(faker.book().title());
+            post.getCategory().add(categoryRepository.findById(random.nextInt(5) + 1).get());
+            post.getCategory().add(categoryRepository.findById(random.nextInt(5) + 1).get());
+            postRepository.save(post);
+        }
     }
 }
