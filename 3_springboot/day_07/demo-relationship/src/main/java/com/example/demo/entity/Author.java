@@ -22,7 +22,7 @@ public class Author {
 
     private String name;
 
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-//    private List<Book> books;
+    @JsonIgnore
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Book> books;
 }

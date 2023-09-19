@@ -6,7 +6,10 @@ import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Random;
 
 @SpringBootTest
@@ -82,6 +85,16 @@ class DemoRelationshipApplicationTests {
     @Test
     void get_book_by_id() {
         Book book = bookRepository.findById(1).get();
+    }
+
+    @Test
+    @Transactional
+    @Rollback(value = false)
+    void get_author_by_id() {
+        Author author = authorRepository.findById(1).get();
+
+        List<Book> books = author.getBooks();
+        books.remove(0);
     }
 
     @Test
