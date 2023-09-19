@@ -44,6 +44,7 @@ public class UserController {
     public String getFilesPage(Model model, @PathVariable Integer id) {
         List<FileServer> fileServerList = fileServerRepository.findByUser_IdOrderByCreatedAtDesc(id);
         model.addAttribute("files", fileServerList);
+        model.addAttribute("userId", id);
         // Code logic
         return "file";
     }
