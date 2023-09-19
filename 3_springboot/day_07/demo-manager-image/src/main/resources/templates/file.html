@@ -74,6 +74,15 @@
             })
     }
 
+    // covert date string to date string format dd/MM/yyyy
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const day = `0${date.getDate()}`.slice(-2); // 08 -> 08, 019 -> 19
+        const month = `0${date.getMonth() + 1}`.slice(-2);
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    }
+
     // upload file using fetch and form data
     const inputFile = document.getElementById('input-file');
     inputFile.addEventListener('change', (e) => {
@@ -97,7 +106,7 @@
                     <tr id="file-${data.id}">
                         <th>${data.id}</th>
                         <td>${data.type}</td>
-                        <td>${data.createdAt}</td>
+                        <td>${formatDate(data.createdAt)}</td>
                         <td><a href="/api/files/${data.id}" target="_blank">Xem chi tiết</a></td>
                         <td>
                             <button class="btn btn-danger" onclick="deleteFile(${data.id})">
