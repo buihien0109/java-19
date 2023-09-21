@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
+    <title>Kong's Blog</title>
+    <link rel=icon href=/img/umaru.PNG>
+    <link rel=icon type=image/png sizes=16x16 href=/img/umaru.PNG>
+    <link rel=icon type=image/png sizes=32x32 href=/img/umaru.PNG>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body class="list" id="top">
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <a href="main.html">Kong.dev</a>
+            </div>
+            <ul id="menu">
+                <li>
+                    <a href="search.html"><span>Search</span></a>
+                </li>
+                <li>
+                    <a href="tag.html"><span>Tags</span></a>
+                </li>
+                <li>
+                    <a href="project.html"><span>Projects</span></a>
+                </li>
+                <li>
+                    <a href="slide.html"><span>Slides</span></a>
+                </li>
+                <li>
+                    <a href="about.html"><span>About</span></a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main class="main">
+        <header class="entry-header">
+            <h1>
+                <span style="
+                            display: inline-block;
+                            transform: rotateY(180deg);
+                        ">🐈</span>
+                Blog app <span>🐈</span>
+            </h1>
+        </header>
+        <ul class="terms-tags top-tags">
+            <li>
+                <a href="./tagDetail.html">Fantasy
+                    <sup><strong><sup>9</sup></strong></sup></a>
+            </li>
+            <li>
+                <a href="./tagDetail.html">Shoujo Ai
+                    <sup><strong><sup>8</sup></strong></sup></a>
+            </li>
+            <li>
+                <a href="./tagDetail.html">Superpower
+                    <sup><strong><sup>6</sup></strong></sup></a>
+            </li>
+            <li>
+                <a href="./tagDetail.html">Action
+                    <sup><strong><sup>5</sup></strong></sup></a>
+            </li>
+            <li>
+                <a href="./tagDetail.html">Music
+                    <sup><strong><sup>5</sup></strong></sup></a>
+            </li>
+        </ul>
+        <article class="post-entry" th:each="blog : ${pageData.getContent()}">
+            <header class="entry-header">
+                <h2 th:text="${blog.title}">
+                    Hướng dẫn tạo tài khoản và sử dụng Chat GPT chỉ với 1
+                    cốc trà đá
+                </h2>
+            </header>
+            <div class="entry-content">
+                <p>
+                    Dạo này Chat GPT đang rất hot, được thần thành hóa lên
+                    quá khiến nhiều người lo sợ nó sẽ “cướp” mất công việc
+                    của mình. Vậy Chat GPT cụ thể là gì, dùng như nào? Bài
+                    viết này mình sẽ hướng dẫn các bạn tự tạo tài khoản cho
+                    riêng mình và trải nghiệm thử Chat GPT, một công cụ khá
+                    hữu ích nếu bạn sử dụng đúng cách. Còn nếu muốn trải
+                    nghiệm nhanh thì các bạn có thể kéo xuống cuối bài viết
+                    để lấy một số tài khoản free được chia sẻ trên mạng
+                    (dùng chung cho nhiều người)....
+                </p>
+            </div>
+            <footer class="entry-footer">
+                <span>01/02/2023</span>
+            </footer>
+            <a class="entry-link"
+                aria-label="post link to Hướng dẫn tạo tài khoản và sử dụng ChatGPT chỉ với 1 cốc trà đá" href="./blogdetail.html"></a>
+        </article>
+
+        <footer class="page-footer">
+            <nav class="pagination">
+                <a class="next" th:href="@{/page/{pageNumber} (pageNumber=${currentPage + 1})}" th:if="not ${pageData.isLast()}">Trang tiếp theo »</a>
+            </nav>
+        </footer>
+    </main>
+</body>
+
+</html>

@@ -3,7 +3,9 @@ package vn.techmaster.blogapp;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import vn.techmaster.blogapp.entity.User;
 import vn.techmaster.blogapp.model.dto.CategoryDto;
+import vn.techmaster.blogapp.model.dto.UserInfo;
 import vn.techmaster.blogapp.repository.CategoryRepository;
 import vn.techmaster.blogapp.repository.UserRepository;
 
@@ -26,10 +28,12 @@ public class CategoryTests {
 
     @Test
     void test_find_by_email_return_projection() {
-        var user = userRepository.findByEmail("hien@gmail.com");
+        UserInfo user = userRepository.findByEmail("hien@gmail.com", UserInfo.class);
         System.out.println(user.getId());
         System.out.println(user.getName());
         System.out.println(user.getEmail());
         System.out.println(user.getAvatar());
+
+        User user1 = userRepository.findByEmail("hien@gmail.com", User.class);
     }
 }
