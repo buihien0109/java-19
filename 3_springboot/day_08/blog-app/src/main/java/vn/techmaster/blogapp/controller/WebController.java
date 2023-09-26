@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import vn.techmaster.blogapp.entity.Blog;
 import vn.techmaster.blogapp.service.BlogService;
+import vn.techmaster.blogapp.service.CategoryService;
 
 @Controller
 @AllArgsConstructor
 public class WebController {
     private final BlogService blogService;
+    private final CategoryService categoryService;
 
     @GetMapping("/")
     public String getHome(Model model) {
@@ -31,22 +33,23 @@ public class WebController {
         return "page";
     }
 
-    @GetMapping("search")
+    @GetMapping("/search")
     public String searchBlog() {
         return null;
     }
 
-    @GetMapping("categories")
-    public String getAllCategory() {
-        return null;
+    @GetMapping("/categories")
+    public String getAllCategory(Model model) {
+        model.addAttribute("categories", categoryService.findAll());
+        return "categories";
     }
 
-    @GetMapping("categories/{categoryName}")
+    @GetMapping("/categories/{categoryName}")
     public String getBlogsOfCategory() {
         return null;
     }
 
-    @GetMapping("blogs/{blogId}/{blogSlug}")
+    @GetMapping("/blogs/{blogId}/{blogSlug}")
     public String getBlogDetail() {
         return null;
     }

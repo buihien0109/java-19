@@ -99,7 +99,7 @@
     <footer class="page-footer">
         <nav class="pagination">
             <th:block th:if="${currentPage == 2}">
-                <a class="prev" th:href="@{/}" th:if="not ${pageData.isFirst()}">« Trang trước</a>
+                <a class="prev" th:href="@{/static}" th:if="not ${pageData.isFirst()}">« Trang trước</a>
             </th:block>
             <th:block th:if="not ${currentPage == 2}">
                 <a class="prev" th:href="@{/page/{pageNumber} (pageNumber=${currentPage - 1})}" th:if="not ${pageData.isFirst()}">« Trang trước</a>
