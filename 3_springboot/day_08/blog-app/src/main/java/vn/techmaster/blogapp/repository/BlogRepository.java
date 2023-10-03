@@ -1,6 +1,7 @@
 package vn.techmaster.blogapp.repository;
 
 import org.hibernate.boot.model.source.spi.Sortable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import vn.techmaster.blogapp.entity.Blog;
 import org.springframework.data.domain.Page;
@@ -35,4 +36,6 @@ public interface BlogRepository extends JpaRepository<Blog, Integer> {
     Optional<Blog> findByIdAndSlugAndStatusTrue(Integer id, String slug);
 
     Optional<Blog> findByIdAndSlugAndStatus(Integer id, String slug, Boolean status);
+
+    Page<Blog> findByUser_IdOrderByCreatedAtDesc(Integer userId, Pageable pageable);
 }
