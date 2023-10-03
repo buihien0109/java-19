@@ -11,6 +11,7 @@ import vn.techmaster.blogapp.entity.Blog;
 import vn.techmaster.blogapp.entity.Category;
 import vn.techmaster.blogapp.service.BlogService;
 import vn.techmaster.blogapp.service.CategoryService;
+import vn.techmaster.blogapp.service.ImageService;
 
 import java.util.List;
 
@@ -19,10 +20,12 @@ import java.util.List;
 public class BlogController {
     private final BlogService blogService;
     private final CategoryService categoryService;
+    private final ImageService imageService;
 
-    public BlogController(BlogService blogService, CategoryService categoryService) {
+    public BlogController(BlogService blogService, CategoryService categoryService, ImageService imageService) {
         this.blogService = blogService;
         this.categoryService = categoryService;
+        this.imageService = imageService;
     }
 
     // Danh sách tất cả bài viết
@@ -63,6 +66,7 @@ public class BlogController {
 
         model.addAttribute("blog", blog);
         model.addAttribute("categoryList", categoryList);
+        model.addAttribute("imageList", imageService.getFilesOfCurrentUser());
         return "admin/blog/detail";
     }
 }

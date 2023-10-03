@@ -33,7 +33,7 @@
             }
 
             .image-item.selected {
-                border-color: #28a745!important;
+                border-color: red !important;
                 border-width: 4px !important;
             }
 
@@ -108,7 +108,8 @@
 
                                     <div class="form-group">
                                         <label>Mô tả ngắn</label>
-                                        <textarea id="description" class="form-control" rows="3" th:text="${blog.description}"></textarea>
+                                        <textarea id="description" class="form-control" rows="3"
+                                                  th:text="${blog.description}"></textarea>
                                     </div>
                                 </div>
 
@@ -132,13 +133,15 @@
                                                 <option th:each="category : ${categoryList}"
                                                         th:selected="${blog.categories.contains(category)}"
                                                         th:value="${category.id}"
-                                                        th:text="${category.name}">Java</option>
+                                                        th:text="${category.name}">Java
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="thumbnail-preview-container mb-3">
-                                            <img th:src="${blog.thumbnail != null ? blog.thumbnail : 'https://placehold.co/600x400'}" alt="" id="thumbnail"/>
+                                            <img th:src="${blog.thumbnail != null ? blog.thumbnail : 'https://placehold.co/600x400'}"
+                                                 alt="" id="thumbnail"/>
                                         </div>
                                         <button type="button" class="btn btn-info btn-flat" data-toggle="modal"
                                                 data-target="#modal-xl" id="btn-modal-image">
@@ -178,7 +181,8 @@
                     <!-- Hiển thị danh sách ảnh -->
                     <div class="image-container mt-4 mb-4">
                         <div class="image-item">
-                            <img src="https://images.unsplash.com/photo-1656918931725-2f9d9fce4acb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw4fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60" alt="">
+                            <img src="https://images.unsplash.com/photo-1656918931725-2f9d9fce4acb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw4fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
+                                 alt="">
                         </div>
                     </div>
 
@@ -204,8 +208,10 @@
     <script th:inline="javascript">
         const blog = [[${blog}]];
         const categoryList = [[${categoryList}]];
+        let imageList = [[${imageList}]];
         console.log(blog);
         console.log(categoryList);
+        console.log(imageList);
 
         $(".select2").select2();
 
@@ -218,6 +224,98 @@
                 codeSyntaxHighlighting: true,
             },
         });
+
+        const imageContainerEl = document.querySelector(".image-container");
+        const btnChoseImage = document.getElementById("btn-chose-image");
+        const btnDeleteImage = document.getElementById("btn-delete-image");
+        const inputImageEl = document.getElementById("avatar");
+        const thumbnailPreviewEl = document.getElementById("thumbnail");
+
+        // Render image
+        const renderImageList = (images) => {
+            let html = "";
+            images.forEach(image => {
+                html += `
+                    <div class="image-item" onclick="choseImage(this)" data-id="${image.id}">
+                        <img src="/api/v1/images/${image.id}" alt="">
+                    </div>
+                `
+            })
+            imageContainerEl.innerHTML = html;
+        }
+
+        // Render pagination
+        const renderPagination = (imageList) => {
+            console.log("Render Pagination : ", imageList)
+            $('.pagination-container').pagination({
+                dataSource: imageList,
+                pageSize: 8,
+                callback: function (data, pagination) {
+                    renderImageList(data);
+                }
+            })
+        }
+
+        // Upload file
+        inputImageEl.addEventListener('change', (e) => {
+            // Lấy thông tin file upload
+            const file = e.target.files[0];
+
+            // Tạo form data
+            const formData = new FormData();
+            formData.append('file', file);
+
+            // call api
+            fetch(`/api/v1/admin/images`, {
+                method: 'POST',
+                body: formData
+            })
+                .then(res => res.json())
+                .then(data => {
+                    imageList.unshift(data);
+                    renderPagination(imageList);
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        })
+
+        // Xử lý chọn ảnh
+        const choseImage = el => {
+            const selectedEl = document.querySelector('.image-item.selected');
+            if (selectedEl) {
+                selectedEl.classList.remove('selected');
+            }
+            el.classList.add('selected');
+
+            btnChoseImage.disabled = false;
+            btnDeleteImage.disabled = false;
+        }
+
+        // Xóa ảnh
+        btnDeleteImage.addEventListener('click', async () => {
+            const selectedEl = document.querySelector('.image-item.selected');
+            const imageId = selectedEl.dataset.id;
+            console.log(typeof imageId)
+
+            try {
+                await fetch(`/api/v1/admin/images/${imageId}`, {
+                    method: 'DELETE'
+                })
+                console.log("Before", imageList)
+                imageList = imageList.filter(image => image.id !== Number(imageId));
+                console.log("After", imageList)
+                renderPagination(imageList);
+
+                btnChoseImage.disabled = true;
+                btnDeleteImage.disabled = true;
+            } catch (error) {
+                console.log(error)
+            }
+        })
+
+        // Vừa vào trang thì render pagination
+        renderPagination(imageList);
     </script>
 </th:block>
 
