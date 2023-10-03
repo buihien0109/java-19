@@ -31,12 +31,12 @@
         <div class="container-fluid">
             <div class="row py-2">
                 <div class="col-12">
-                    <button type="button" class="btn btn-primary">
+                    <a href="/admin/blogs/create" type="button" class="btn btn-primary">
                         <i class="fas fa-plus"></i> Viết bài
-                    </button>
-                    <button type="button" class="btn btn-info">
+                    </a>
+                    <a href="/admin/blogs" type="button" class="btn btn-info">
                         <i class="fas fa-redo"></i> Refresh
-                    </button>
+                    </a>
                 </div>
             </div>
             <div class="row">
@@ -54,29 +54,48 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <tr th:each="blog : ${pageData.getContent()}">
                                     <td>
-                                        <a href="./blog-detail.html">Khai giảng khóa
-                                            Java Spring Boot 12A
-                                            - song song 2 hình
-                                            thức offline /
-                                            online đáp ứng nhu
-                                            cầu đào tạo từ xa</a>
+                                        <a th:href="@{/admin/blogs/{id}/detail (id=${blog.id})}" th:text="${blog.title}">Khai giảng khóa
+                                            Java Spring Boot 12</a>
                                     </td>
                                     <td>
-                                        <a href="#">John Doe</a>
+                                        <a href="#" th:text="${blog.user.name}">John Doe</a>
                                     </td>
                                     <td>
-                                        Java, Golang, Springboot
+                                        <span th:each="category : ${blog.categories}"
+                                              th:text="${category.name}"
+                                                class="badge badge-info mr-1"
+                                        ></span>
                                     </td>
-                                    <td>Công khai</td>
-                                    <td>06-07-2022</td>
+                                    <td th:text="${blog.status ? 'Công khai' : 'Nháp'}">Công khai</td>
+                                    <td th:text="${#temporals.format(blog.createdAt, 'dd-MM-YYYY')}">06-07-2022</td>
                                 </tr>
                                 </tbody>
                             </table>
 
-                            <div class="d-flex justify-content-center mt-3" id="pagination">
-
+                            <div class="d-flex justify-content-center mt-3" id="pagination" th:if="${pageData.getTotalPages() != 1}">
+                                <ul class="pagination mb-0">
+                                    <li class="paginate_button page-item previous"
+                                        th:classappend="${currentPage == 1 ? 'disabled' : ''}"
+                                        id="example2_previous">
+                                        <a th:href="@{/admin/blogs (page=${currentPage - 1})}"
+                                           class="page-link">Previous</a>
+                                    </li>
+                                    <li class="paginate_button page-item"
+                                        th:classappend="${number == currentPage ? 'active' : ''}"
+                                        th:each="number : ${#numbers.sequence(1, pageData.totalPages)}">
+                                        <a th:href="@{/admin/blogs (page=${number})}"
+                                           class="page-link"
+                                           th:text="${number}">1</a>
+                                    </li>
+                                    <li class="paginate_button page-item next"
+                                        th:classappend="${currentPage == pageData.totalPages ? 'disabled' : ''}"
+                                        id="example2_next">
+                                        <a th:href="@{/admin/blogs (page=${currentPage + 1})}"
+                                           class="page-link">Next</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -85,6 +104,16 @@
         </div>
     </section>
 </div>
+
+<th:block id="js">
+    <script th:inline="javascript">
+        const pageData = [[${pageData}]];
+        const currentPage = [[${currentPage}]];
+
+        console.log(pageData);
+        console.log(currentPage);
+    </script>
+</th:block>
 </body>
 
 </html>

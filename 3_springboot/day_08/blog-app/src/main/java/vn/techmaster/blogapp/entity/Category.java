@@ -1,5 +1,6 @@
 package vn.techmaster.blogapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,6 +23,7 @@ public class Category {
     @Column(name = "name")
     private String name;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "categories")
     private List<Blog> blogs = new ArrayList<>();
 

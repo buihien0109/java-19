@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import vn.techmaster.blogapp.entity.Blog;
 import vn.techmaster.blogapp.entity.Category;
-import vn.techmaster.blogapp.model.projection.BlogPublic;
-import vn.techmaster.blogapp.model.projection.CategoryPublic;
 import vn.techmaster.blogapp.service.BlogService;
 import vn.techmaster.blogapp.service.CategoryService;
 

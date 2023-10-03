@@ -1,15 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
-      th:replace="~{admin/layout/layout :: main-fragment(~{:: title}, ~{:: #css}, ~{:: .content-wrapper}, ~{:: #javascript})}">
+      th:replace="~{admin/layout/layout :: main-fragment(~{:: title}, ~{}, ~{:: .content-wrapper}, ~{:: #js})}">
 
 <head>
     <title>Bài viết của tôi</title>
-
-    <th:block id="css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.6.0/pagination.min.css"
-              integrity="sha512-K1k7jSn9RDKEcn/ugqVVvWYu0bcS3q1w6m/5pQSnrj0bCfIqF6Wk49lkmckSb4wglvTP9V17LtS0q0XxYccXbg=="
-              crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    </th:block>
 </head>
 
 <body>
@@ -37,12 +31,12 @@
         <div class="container-fluid">
             <div class="row py-2">
                 <div class="col-12">
-                    <button type="button" class="btn btn-primary">
+                    <a href="/admin/blogs/create" type="button" class="btn btn-primary">
                         <i class="fas fa-plus"></i> Viết bài
-                    </button>
-                    <button type="button" class="btn btn-info">
+                    </a>
+                    <a href="/admin/blogs/own-blogs" type="button" class="btn btn-info">
                         <i class="fas fa-redo"></i> Refresh
-                    </button>
+                    </a>
                 </div>
             </div>
             <div class="row">
@@ -59,26 +53,45 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <tr th:each="blog : ${pageData.getContent()}">
                                     <td>
-                                        <a href="detail.html">Khai giảng khóa
-                                            Java Spring Boot 12A
-                                            - song song 2 hình
-                                            thức offline /
-                                            online đáp ứng nhu
-                                            cầu đào tạo từ xa</a>
+                                        <a th:href="@{/admin/blogs/{id}/detail (id=${blog.id})}" th:text="${blog.title}">Khai giảng khóa
+                                            Java Spring Boot 12</a>
                                     </td>
                                     <td>
-                                        Java, Golang, Springboot
+                                        <span th:each="category : ${blog.categories}"
+                                              th:text="${category.name}"
+                                              class="badge badge-info mr-1"
+                                        ></span>
                                     </td>
-                                    <td>Công khai</td>
-                                    <td>06-07-2022</td>
+                                    <td th:text="${blog.status ? 'Công khai' : 'Nháp'}">Công khai</td>
+                                    <td th:text="${#temporals.format(blog.createdAt, 'dd-MM-YYYY')}">06-07-2022</td>
                                 </tr>
                                 </tbody>
                             </table>
 
-                            <div class="d-flex justify-content-center mt-3" id="pagination">
-
+                            <div class="d-flex justify-content-center mt-3" id="pagination" th:if="${pageData.getTotalPages() != 1}">
+                                <ul class="pagination mb-0">
+                                    <li class="paginate_button page-item previous"
+                                        th:classappend="${currentPage == 1 ? 'disabled' : ''}"
+                                        id="example2_previous">
+                                        <a th:href="@{/admin/blogs (page=${currentPage - 1})}"
+                                           class="page-link">Previous</a>
+                                    </li>
+                                    <li class="paginate_button page-item"
+                                        th:classappend="${number == currentPage ? 'active' : ''}"
+                                        th:each="number : ${#numbers.sequence(1, pageData.totalPages)}">
+                                        <a th:href="@{/admin/blogs (page=${number})}"
+                                           class="page-link"
+                                           th:text="${number}">1</a>
+                                    </li>
+                                    <li class="paginate_button page-item next"
+                                        th:classappend="${currentPage == pageData.totalPages ? 'disabled' : ''}"
+                                        id="example2_next">
+                                        <a th:href="@{/admin/blogs (page=${currentPage + 1})}"
+                                           class="page-link">Next</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -88,13 +101,13 @@
     </section>
 </div>
 
-<th:block id="javascript">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.6.0/pagination.min.js"
-            integrity="sha512-GzbaI5EsNzdEUq6/2XLYpr1y9CUZRIVsUeWTAFgULtQa5jZ3Nug8i0nZKM6jp9NffBCZhymPPQFcF0DK+JkRpw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+<th:block id="js">
     <script th:inline="javascript">
+        const pageData = [[${pageData}]];
+        const currentPage = [[${currentPage}]];
 
+        console.log(pageData);
+        console.log(currentPage);
     </script>
 </th:block>
 </body>
