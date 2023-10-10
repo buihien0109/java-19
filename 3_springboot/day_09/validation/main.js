@@ -17,6 +17,17 @@ $('#form').validate({
             minlength: 10,
             maxlength: 20
         },
+        gender : {
+            required: true
+        },
+        password : {
+            required: true,
+            minlength: 6,
+        },
+        confirmPassword : {
+            required: true,
+            equalTo: "#password"
+        }
     },
     messages: {
         name: {
@@ -36,6 +47,17 @@ $('#form').validate({
             minlength: "Mô tả phải có ít nhất 10 ký tự",
             maxlength: "Mô tả không được quá 20 ký tự"
         },
+        gender : {
+            required: "Giới tính không được để trống"
+        },
+        password : {
+            required: "Mật khẩu không được để trống",
+            minlength: "Mật khẩu phải có ít nhất 6 ký tự",
+        },
+        confirmPassword : {
+            required: "Mật khẩu không được để trống",
+            equalTo: "Mật khẩu không khớp"
+        }
     },
     errorElement: 'span',
     errorPlacement: function (error, element) {

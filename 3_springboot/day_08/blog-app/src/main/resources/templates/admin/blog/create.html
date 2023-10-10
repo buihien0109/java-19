@@ -59,20 +59,22 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-8">
-                                    <div class="form-group">
-                                        <label>Tiêu đề</label>
-                                        <input type="text" class="form-control" id="title"/>
-                                    </div>
+                                    <form id="form-create-blog">
+                                        <div class="form-group">
+                                            <label>Tiêu đề</label>
+                                            <input type="text" class="form-control" id="title" name="title"/>
+                                        </div>
 
-                                    <div class="form-group">
-                                        <label>Nội dung</label>
-                                        <textarea id="content"></textarea>
-                                    </div>
+                                        <div class="form-group">
+                                            <label>Nội dung</label>
+                                            <textarea id="content" name="content"></textarea>
+                                        </div>
 
-                                    <div class="form-group">
-                                        <label>Mô tả ngắn</label>
-                                        <textarea id="description" class="form-control" rows="3"></textarea>
-                                    </div>
+                                        <div class="form-group">
+                                            <label>Mô tả ngắn</label>
+                                            <textarea id="description" class="form-control" rows="3" name="description"></textarea>
+                                        </div>
+                                    </form>
                                 </div>
 
                                 <div class="col-md-4">
@@ -129,6 +131,54 @@
             },
         });
 
+        const contentEl = document.getElementById("content");
+        contentEl.style.display = "block";
+        contentEl.style.height = "0";
+        contentEl.style.padding = "0";
+        contentEl.style.border = "none";
+        easyMDE.codemirror.on("change", () => {
+            contentEl.value = easyMDE.value();
+        });
+
+        // Validate form
+        // Xử lý validate form
+        $('#form-create-blog').validate({
+            rules: {
+                title: {
+                    required: true
+                },
+                content: {
+                    required: true
+                },
+                description: {
+                    required: true
+                },
+            },
+            messages: {
+                title: {
+                    required: "Tên bài viết không được để trống"
+                },
+                content: {
+                    required: "Nội dung không được để trống"
+                },
+                description: {
+                    required: "Mô tả không được để trống"
+                },
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                console.log({error, element});
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+
         // Tạo bài viết -> click button -> request -> response -> chuyển hướng qua trang chi tiết của bài viết đó
         const btnCreate = document.getElementById("btn-create");
         const title = document.getElementById("title");
@@ -136,6 +186,11 @@
         const status = document.getElementById("status");
 
         btnCreate.addEventListener("click", async () => {
+            // validate form
+            if (!$('#form-create-blog').valid()) {
+                return;
+            }
+
             // Build request body
             const data = {
                 title: title.value,
