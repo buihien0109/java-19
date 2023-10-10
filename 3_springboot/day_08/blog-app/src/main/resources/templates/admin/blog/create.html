@@ -28,7 +28,7 @@
                             <a href="#">Dashboard</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="#">Blog</a>
+                            <a href="/admin/blogs/own-blogs">Blog</a>
                         </li>
                         <li class="breadcrumb-item active">
                             Tạo bài viết
@@ -44,9 +44,9 @@
         <div class="container-fluid">
             <div class="row py-2">
                 <div class="col-6">
-                    <button type="button" class="btn btn-default">
+                    <a href="/admin/blogs/own-blogs" type="button" class="btn btn-default">
                         <i class="fas fa-chevron-left"></i> Quay lại
-                    </button>
+                    </a>
                     <button type="button" class="btn btn-info px-4" id="btn-create">
                         Lưu
                     </button>
@@ -91,26 +91,9 @@
                                         <label>Danh mục</label>
                                         <div class="select2-purple">
                                             <select class="select2 form-control" multiple="multiple" id="category">
-                                                <option>
-                                                    Java
-                                                </option>
-                                                <option>
-                                                    Golang
-                                                </option>
-                                                <option>
-                                                    React
-                                                </option>
-                                                <option>
-                                                    Lập trình web
-                                                </option>
-                                                <option>
-                                                    Database
-                                                </option>
-                                                <option>
-                                                    Tips Trick
-                                                </option>
-                                                <option>
-                                                    Devops
+                                                <option th:each="category : ${categoryList}"
+                                                        th:value="${category.id}"
+                                                        th:text="${category.name}">Java
                                                 </option>
                                             </select>
                                         </div>
@@ -140,10 +123,43 @@
         const easyMDE = new EasyMDE({
             element: document.getElementById("content"),
             spellChecker: false,
-            maxHeight: "500px",
+            maxHeight: "300px",
             renderingConfig: {
                 codeSyntaxHighlighting: true,
             },
+        });
+
+        // Tạo bài viết -> click button -> request -> response -> chuyển hướng qua trang chi tiết của bài viết đó
+        const btnCreate = document.getElementById("btn-create");
+        const title = document.getElementById("title");
+        const description = document.getElementById("description");
+        const status = document.getElementById("status");
+
+        btnCreate.addEventListener("click", async () => {
+            // Build request body
+            const data = {
+                title: title.value,
+                description: description.value,
+                content: easyMDE.value(),
+                status: status.value === "true",
+                categoryIds: $("#category").val().map(id => Number(id)),
+            };
+            console.log(data);
+
+            try {
+                let res = await axios.post("/api/v1/admin/blogs", data);
+                if (res.status === 201) {
+                    toastr.success("Tạo bài viết thành công");
+                    setTimeout(() => {
+                        window.location.href = `/admin/blogs/${res.data.id}/detail`;
+                    }, 1500);
+                } else {
+                    toastr.error("Tạo bài viết thất bại");
+                }
+            } catch (e) {
+                console.log(e);
+                toastr.error(e.response.data.message);
+            }
         });
     </script>
 </th:block>

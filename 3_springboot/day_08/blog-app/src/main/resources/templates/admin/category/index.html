@@ -1,10 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{admin/layout/layout :: main-fragment(~{:: title}, ~{}, ~{:: .content-wrapper}, ~{:: #js})}">
 
+<head>
+    <title>Tất cả danh mục</title>
+</head>
+
+<body>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="#">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            Danh sách danh mục
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row py-2">
+                <div class="col-12">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
+                        <i class="fas fa-plus"></i> Tạo danh mục
+                    </button>
+                    <a href="/admin/categories" type="button" class="btn btn-info">
+                        <i class="fas fa-redo"></i> Refresh
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên danh mục</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Backend</td>
+                                    <td>
+                                        <button class="btn btn-warning">Edit</button>
+                                        <button class="btn btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Frontend</td>
+                                    <td>
+                                        <button class="btn btn-warning">Edit</button>
+                                        <button class="btn btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tạo danh mục</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" placeholder="Enter name ...">
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary">Lưu</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<th:block id="js">
+    <script th:inline="javascript">
+
+    </script>
+</th:block>
 </body>
+
 </html>
