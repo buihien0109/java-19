@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile page</title>
+</head>
+<body>
+<h1>Profile page</h1>
+
+<ul>
+    <li><a href="/">Home page</a></li>
+    <li sec:authorize="hasRole('ROLE_USER')"><a href="/profile">Profile page</a></li>
+    <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/admin">Admin page</a></li>
+</ul>
+</body>
+</html>
