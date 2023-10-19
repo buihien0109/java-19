@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login page</title>
+</head>
+<body>
+<h1>Form Login</h1>
+<form id="form-login">
+    <div>
+        <label>
+            Email:
+            <input type="text" name="email" id="email"/>
+        </label>
+    </div>
+    <div>
+        <label>
+            Password:
+            <input type="password" name="password" id="password"/>
+        </label>
+    </div>
+    <div>
+        <button type="submit">Đăng nhập</button>
+    </div>
+</form>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    const formLogin = document.getElementById('form-login');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    formLogin.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        console.log("submit form login");
+
+        const data = {
+            email: email.value,
+            password: password.value
+        };
+
+        try {
+            let res = await axios.post('http://localhost:8080/api/v1/auth/login', data);
+            if (res.status === 200) {
+                alert("Đăng nhập thành công");
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 1000);
+            } else {
+                alert("Đăng nhập thất bại");
+            }
+        } catch (e) {
+            alert(e.response.data.message)
+        }
+
+
+    })
+</script>
+</body>
+</html>
