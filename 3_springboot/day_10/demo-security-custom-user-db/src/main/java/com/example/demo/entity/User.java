@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,6 +26,7 @@ public class User {
     private String email;
 
     private String password;
+    private Boolean isEnabled;
 
     @ManyToMany(fetch = FetchType.EAGER) // eager: load all roles when load user
     @JoinTable(name = "user_role",

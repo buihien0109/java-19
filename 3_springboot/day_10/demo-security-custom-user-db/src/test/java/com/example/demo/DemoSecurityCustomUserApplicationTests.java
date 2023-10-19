@@ -1,7 +1,7 @@
 package com.example.demo;
 
-import com.example.demo.model.Role;
-import com.example.demo.model.User;
+import com.example.demo.entity.Role;
+import com.example.demo.entity.User;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import org.junit.jupiter.api.Test;
