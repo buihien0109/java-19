@@ -22,7 +22,7 @@ public class WebController {
         Page<Blog> pageData = blogService.findAll(1, 5);
         model.addAttribute("currentPage", 1);
         model.addAttribute("pageData", pageData);
-        return "main";
+        return "web/main";
     }
 
     @GetMapping("/page/{pageNumber}")
@@ -30,7 +30,7 @@ public class WebController {
         Page<Blog> pageData = blogService.findAll(pageNumber, 5);
         model.addAttribute("currentPage", pageNumber);
         model.addAttribute("pageData", pageData);
-        return "page";
+        return "web/page";
     }
 
     @GetMapping("/search")
@@ -41,7 +41,7 @@ public class WebController {
     @GetMapping("/categories")
     public String getAllCategory(Model model) {
         model.addAttribute("categories", categoryService.findAll());
-        return "categories";
+        return null;
     }
 
     @GetMapping("/categories/{categoryName}")

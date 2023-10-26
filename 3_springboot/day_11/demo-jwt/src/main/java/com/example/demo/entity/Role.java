@@ -1,9 +1,11 @@
-package vn.techmaster.blogapp.entity;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -16,7 +18,6 @@ public class Role {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "name", unique = true)
+    @Column(unique = true)
     private String name;
 }
-

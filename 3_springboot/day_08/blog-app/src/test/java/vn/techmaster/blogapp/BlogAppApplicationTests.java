@@ -4,6 +4,7 @@ import com.github.slugify.Slugify;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import vn.techmaster.blogapp.entity.*;
 import vn.techmaster.blogapp.repository.*;
 
@@ -29,11 +30,13 @@ class BlogAppApplicationTests {
     @Autowired
     private CommentRepository commentRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Test
     void save_roles() {
         List<Role> roles = List.of(
                 new Role(null, "ADMIN"),
-                new Role(null, "USER"),
                 new Role(null, "AUTHOR")
         );
 
@@ -42,17 +45,43 @@ class BlogAppApplicationTests {
 
     @Test
     void save_users() {
-        Role userRole = roleRepository.findByName("USER").orElse(null);
         Role adminRole = roleRepository.findByName("ADMIN").orElse(null);
         Role authorRole = roleRepository.findByName("AUTHOR").orElse(null);
 
         List<User> users = List.of(
-                new User(null, "Bùi Hiên", "hien@gmail.com", "111", null, List.of(adminRole, userRole)),
-                new User(null, "Minh Duy", "duy@gmail.com", "111", null, List.of(userRole)),
-                new User(null, "Thu Hằng", "hang@gmail.com","111", null, List.of(authorRole, userRole))
+                new User(null, "Bùi Hiên", "hien@gmail.com", passwordEncoder.encode("123"), null, List.of(adminRole, authorRole)),
+                new User(null, "Minh Duy", "duy@gmail.com", passwordEncoder.encode("123"), null, List.of(authorRole))
         );
 
         userRepository.saveAll(users);
+    }
+
+    @Test
+    void update_password() {
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            user.setPassword(passwordEncoder.encode("123"));
+            userRepository.save(user);
+        }
+    }
+
+    @Test
+    void update_role() {
+        Role roleAdmin = roleRepository.findByName("ADMIN").orElse(null);
+        Role roleAuthor = roleRepository.findByName("AUTHOR").orElse(null);
+
+        User user = userRepository.findById(1).orElse(null);
+        user.getRoles().add(roleAdmin);
+        user.getRoles().add(roleAuthor);
+        userRepository.save(user);
+
+        User user1 = userRepository.findById(2).orElse(null);
+        user1.getRoles().add(roleAuthor);
+        userRepository.save(user1);
+
+        User user2 = userRepository.findById(3).orElse(null);
+        user2.getRoles().add(roleAuthor);
+        userRepository.save(user2);
     }
 
     @Test
@@ -86,7 +115,7 @@ class BlogAppApplicationTests {
             List<Category> rdList = new ArrayList<>();
             for (int j = 0; j < 3; j++) {
                 Category rdCategory = categoryList.get(rd.nextInt(categoryList.size()));
-                if(!rdList.contains(rdCategory)) {
+                if (!rdList.contains(rdCategory)) {
                     rdList.add(rdCategory);
                 }
             }

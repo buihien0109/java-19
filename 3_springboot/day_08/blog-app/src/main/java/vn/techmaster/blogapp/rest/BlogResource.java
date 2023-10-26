@@ -16,23 +16,6 @@ public class BlogResource {
         this.blogService = blogService;
     }
 
-    @GetMapping
-    public ResponseEntity<?> getAllBlogs(@RequestParam(required = false, defaultValue = "1") Integer page,
-                                         @RequestParam(required = false, defaultValue = "10") Integer limit) {
-        return ResponseEntity.ok(blogService.getAllBlogs(page, limit));
-    }
-
-    @GetMapping("/own-blogs")
-    public ResponseEntity<?> getAllBlogsOfCurrentUser(@RequestParam(required = false, defaultValue = "1") Integer page,
-                                                      @RequestParam(required = false, defaultValue = "10") Integer limit) {
-        return ResponseEntity.ok(blogService.getAllBlogsOfCurrentUser(page, limit));
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getBlogById(@PathVariable Integer id) {
-        return ResponseEntity.ok(blogService.getBlogById(id));
-    }
-
     @PostMapping
     public ResponseEntity<?> createBlog(@Valid @RequestBody UpsertBlogRequest request) {
         return new ResponseEntity<>(blogService.createBlog(request), HttpStatus.CREATED);
